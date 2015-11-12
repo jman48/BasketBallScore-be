@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
 
   post 'users' => 'users#create'
-  get 'users' => 'users#get'
+  get 'users' => 'users#show'
+  get 'users/:id' => 'users#showUser'
 
 
   # The priority is based upon order of creation: first created -> highest priority.

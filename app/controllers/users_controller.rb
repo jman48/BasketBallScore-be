@@ -5,18 +5,26 @@ class UsersController < ApplicationController
   end
 
   def create
-    username = params.require(:user).permit(:username)
+    params.require(:user).permit(:username)
 
-    @user = User.new(username)
+    @user = User.new(params.permit(:username))
 
     respond_to do |format|
       if @user.save
-        #format.html { redirect_to @company, notice: 'Company was successfully created.' }
         format.json { render :json => @user }
       else
-        #format.html { render :new }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def show
+    render json: User.all
+  end
+
+  def showUser
+    params.permit(:id)
+    @user = User.find(params[:id])
+    render :json => @user
   end
 end
