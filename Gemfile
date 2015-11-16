@@ -1,5 +1,10 @@
 source 'https://rubygems.org'
 
+# Hopefully allows cross-origin resource sharing
+gem 'rack-cors', :require => 'rack/cors'
+
+# Install timezone info data
+gem 'tzinfo-data'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.4'
@@ -46,7 +51,5 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 
-  # Hopefully allows cross-origin resource sharing
-  gem 'rack-cors', :require => 'rack/cors'
 end
 
