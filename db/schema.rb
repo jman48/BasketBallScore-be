@@ -18,6 +18,9 @@ ActiveRecord::Schema.define(version: 20151112200741) do
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
+    t.integer  "total_shots"
+    t.integer  "longest_streak"
+    t.integer  "shootouts_won"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "username"
