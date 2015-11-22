@@ -32,7 +32,7 @@ class UsersController < ApplicationController
     params.permit(:id, :totalHoops)
     @user = User.find(params[:id])
 
-    @user.total_hoops = params[:totalHoops]
+    @user.totalHoops = params[:totalHoops]
 
     respond_to do |format|
       if @user.save
@@ -47,7 +47,7 @@ class UsersController < ApplicationController
     params.permit(:id, :highestStreak)
     @user = User.find(params[:id])
 
-    @user.highest_streak = params[:highestStreak]
+    @user.highestStreak = params[:highestStreak]
 
     respond_to do |format|
       if @user.save
@@ -74,7 +74,7 @@ class UsersController < ApplicationController
     params.permit(:id, :shootoutsWon)
     @user = User.find(params[:id])
 
-    @user.shootouts_won = params[:shootoutsWon]
+    @user.shootoutsWon = params[:shootoutsWon]
 
     respond_to do |format|
       if @user.save
