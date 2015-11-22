@@ -24,7 +24,6 @@ module Bball
     config.active_record.raise_in_transactional_callbacks = true
 
     # Enables cross-origin resource sharing
-
     config.middleware.insert_before 0, "Rack::Cors" do
       allow do
         origins '*'
