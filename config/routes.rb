@@ -3,6 +3,10 @@ Rails.application.routes.draw do
   post 'users' => 'users#create'
   get 'users' => 'users#show'
   get 'users/:id' => 'users#showUser'
+  put 'users/:id/totalHoops' => 'users#changeTotalHoops'
+  put 'users/:id/highestStreak' => 'users#changeHighestStreak'
+  put 'users/:id/shootoutsWon' => 'users#changeShootoutsWon'
+  delete 'users/:id' => 'users#destroy'
 
 
   # The priority is based upon order of creation: first created -> highest priority.

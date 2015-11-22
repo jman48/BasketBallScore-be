@@ -27,4 +27,61 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     render :json => @user
   end
+
+  def changeTotalHoops
+    params.permit(:id, :totalHoops)
+    @user = User.find(params[:id])
+
+    @user.total_hoops = params[:totalHoops]
+
+    respond_to do |format|
+      if @user.save
+        format.json { render :json => @user }
+      else
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def changeHighestStreak
+    params.permit(:id, :highestStreak)
+    @user = User.find(params[:id])
+
+    @user.highest_streak = params[:highestStreak]
+
+    respond_to do |format|
+      if @user.save
+        format.json { render :json => @user }
+      else
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def destroy
+    params.permit(:id)
+    @user = User.find(params[:id])
+    respond_to do |format|
+      if @user.destroy
+        format.json { render :json => @user }
+      else
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def changeShootoutsWon
+    params.permit(:id, :shootoutsWon)
+    @user = User.find(params[:id])
+
+    @user.shootouts_won = params[:shootoutsWon]
+
+    respond_to do |format|
+      if @user.save
+        format.json { render :json => @user }
+      else
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 end
