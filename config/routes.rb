@@ -8,6 +8,11 @@ Rails.application.routes.draw do
   put 'users/:id/shootoutsWon' => 'users#changeShootoutsWon'
   delete 'users/:id' => 'users#destroy'
 
+  post 'games' => 'games#create'
+  get 'games' => 'games#showGames'
+  get 'games/players' => 'games#showPlayers'
+  get 'games/players/:id' => 'games#showPlayer'
+  delete 'games/:id' => 'games#delete'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
