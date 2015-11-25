@@ -1,7 +1,7 @@
 class Player < ActiveRecord::Base
 
-  belongs_to :users
-  belongs_to :games
+  belongs_to :game
+  belongs_to :user
 
   after_initialize :init
 

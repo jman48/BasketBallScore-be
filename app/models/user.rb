@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  has_many :player
   after_initialize :init
 
   def init
