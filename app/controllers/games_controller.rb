@@ -25,6 +25,13 @@ class GamesController < ApplicationController
     end
   end
 
+  def show
+    game = Game.find(params[:id])
+    respond_to do |format|
+      format.json { render :json => game }
+    end
+  end
+
   def showAll
     games = Game.all
     respond_to do |format|
@@ -32,7 +39,7 @@ class GamesController < ApplicationController
     end
   end
   
-  def showGame
+  def showActive
     activeGames = Game.where(is_active: true)
     if (activeGames.empty?)
       active = false

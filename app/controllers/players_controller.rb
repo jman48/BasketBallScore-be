@@ -1,14 +1,36 @@
 class PlayersController < ApplicationController
 
-  def showAll
-    players = Player.all
+  def show
+    player = Player.find(params[:id])
+    user = player.user
+    player.as_json.merge(user.as_json)
+    respond_to do |format|
+      format.json { render :json => player }
+    end
+  end
+
+  def showAllInGame
+    players = Player.where(game_id: params[:id])
+    
     #join each player with appropriate user
     joined = players.map do |player|
       user = player.user
       player.as_json.merge(user.as_json)
     end
 
-    #put "joined: " + joined.to_s
+    respond_to do |format|
+      format.json { render :json => joined }
+    end
+  end
+
+  def showAll
+    players = Player.all
+
+    #join each player with appropriate user
+    joined = players.map do |player|
+      user = player.user
+      player.as_json.merge(user.as_json)
+    end
 
     respond_to do |format|
       format.json { render :json => joined }
@@ -16,9 +38,9 @@ class PlayersController < ApplicationController
   end
 
   def update
-    params.permit(:username, :score)
+    params.permit(:username, :score, :game_id)
     user = User.where(username: params[:username]).take
-    player = Player.where(user: user).take
+    player = Player.where(user: user).where(game_id: params[:game_id]).take
     player.update(score: params[:score])
 
     respond_to do |format|

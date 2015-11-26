@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
 
   post 'users' => 'users#create'
-  get 'users' => 'users#show'
-  get 'users/:id' => 'users#showUser'
+  get 'users' => 'users#showAll'
+  get 'users/:id' => 'users#show'
   put 'users/:id/totalHoops' => 'users#changeTotalHoops'
   put 'users/:id/highestStreak' => 'users#changeHighestStreak'
   put 'users/:id/shootoutsWon' => 'users#changeShootoutsWon'
@@ -18,7 +18,8 @@ Rails.application.routes.draw do
 
   get 'players' => 'players#showAll'
   get 'players/:id' => 'players#show'
-  put 'players/:username' => 'players#update'
+  get 'players/game/:id' => 'players#showAllInGame'
+  put 'players/:username/game/:game_id' => 'players#update'
   delete 'players' => 'players#deleteAll'
   delete 'players/:id' => 'players#delete'
 
