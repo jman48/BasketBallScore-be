@@ -3,6 +3,13 @@ class GamesController < ApplicationController
   def create
     params.require(:game).permit(:hoopsToWin, :players)
 
+    # if any games already active, close them
+    active = Game.where(is_active: true)
+    active.each do |game|
+      game.is_active = false
+      game.save
+    end
+
     @game = Game.create(
       hoopsToWin: params[:hoopsToWin],
       is_active: true
