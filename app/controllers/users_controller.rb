@@ -18,11 +18,11 @@ class UsersController < ApplicationController
     end
   end
 
-  def show
+  def showAll
     render json: User.all
   end
 
-  def showUser
+  def show
     params.permit(:id)
     @user = User.find(params[:id])
     render :json => @user

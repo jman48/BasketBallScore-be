@@ -1,12 +1,21 @@
 class GamesController < ApplicationController
 
   def create
-    params.require(:game).permit(:hoopsToWin, :id, :players)
+    params.require(:game).permit(:hoopsToWin, :players)
+
+    # if any games already active, close them
+    active = Game.where(is_active: true)
+    active.each do |game|
+      game.is_active = false
+      game.save
+    end
 
     @game = Game.create(
-      hoopsToWin: params[:hoopsToWin]
+      hoopsToWin: params[:hoopsToWin],
+      is_active: true
     )
 
+    # objects which contain user and player attributes
     @players = params[:players]
 
     @players.each_with_index do |player, index|
@@ -23,25 +32,41 @@ class GamesController < ApplicationController
     end
   end
 
-  def showPlayers
-    players = Player.all
-    #join each player with appropriate user
-    joined = players.map do |player|
-      user = User.find(player[:user_id])
-      player.as_json.merge(user.as_json)
-    end
-
-    #put "joined: " + joined.to_s
-
+  def show
+    game = Game.find(params[:id])
     respond_to do |format|
-      format.json { render :json => joined }
+      format.json { render :json => game }
     end
   end
 
-  def showGames
+  def showAll
     games = Game.all
     respond_to do |format|
       format.json { render :json => games }
+    end
+  end
+  
+  def showActive
+    activeGames = Game.where(is_active: true)
+    if (activeGames.empty?)
+      active = false
+    else
+      active = activeGames.first
+    end
+    respond_to do |format|
+      format.json { render :json => active }
+    end
+  end
+
+  def updateActive
+    game = Game.find(params[:id])
+    game.is_active = params[:isActive]
+    respond_to do |format|
+      if game.save
+        format.json { render :json => game }
+      else
+        format.json { render json: game.errors, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -55,22 +80,13 @@ class GamesController < ApplicationController
     end
   end
 
-  def deletePlayer
-    params.require(:id)
-
-    if Player.find(params[:id]).destroy
-      respond_to do |format|
-        format.json { render :json => "done" }
-    end
-    end
-  end
-
   def deleteAll
-    if Game.destroy_all
-      respond_to do |format|
+    respond_to do |format|
+      if Game.destroy_all
         format.json { render :json => "done" }
+      else
+        format.json { render json: Game.errors, status: :unprocessable_entity}
       end
     end
   end
-
 end
