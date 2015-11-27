@@ -41,7 +41,13 @@ class PlayersController < ApplicationController
     params.permit(:username, :score, :game_id)
     user = User.where(username: params[:username]).take
     player = Player.where(user: user).where(game_id: params[:game_id]).take
+
+    # update player's score
     player.update(score: params[:score])
+
+    # add 1 to user's total hoops
+    user.totalHoops = user.totalHoops + 1
+    user.save
 
     respond_to do |format|
       if player.save
